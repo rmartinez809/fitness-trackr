@@ -5,12 +5,20 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 
 //Import components
-import { Home } from './Components';
+import {
+  Home, Header
+} from './Components/index';
 
 const App = () => {
   return (
     <Router>
       <div className="app">
+        {/** Component: Header */}
+        <Route
+        exact path = '/'
+        render = {routeProps => <Header {...routeProps} />}
+        />
+
         {/** Component: Home */}
         <Route
         exact path = '/'
