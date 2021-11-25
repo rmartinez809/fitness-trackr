@@ -1,3 +1,43 @@
-h1 {
-  color: red;
+.home-container {
+  background-image: url("https://www.bodybuilding.com/images/2020/january/beginners-machine-workouts-for-women-comingsoon-header.jpg");
+  background-size: auto;
+  background-color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+#title-container {
+  display: inline;
+  padding: 2rem;
+  padding-bottom: 20rem;
+}
+
+#title {
+  font-size: 3.2rem;
+  font-weight: 500;
+}
+#tagLine {
+  font-size: 1.2rem;
+}
+.red {
+  color: #dc3545;
+}
+
+/* Media Queries */
+/* @media screen and (max-width: 760px) {
+  .home-container {
+    background-image: url("https://www.bodybuilding.com/images/2020/january/beginners-machine-workouts-for-women-comingsoon-header-mobile.jpg");
+    background-size: cover;
+    background-color: black;
+    background-position: top;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+  }
+} */

@@ -3,9 +3,11 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="home">
-      <h1>Fitness Trackr</h1>
-        <p>A stronger, healthier you</p>
+    <div className="home-container">
+      <div id="title-container">
+        <span id='title'>Fitness Track<span className="red">r</span></span>
+        <p id='tagLine'>A stronger, healthier you</p>
+      </div>
     </div>
   );
 }
