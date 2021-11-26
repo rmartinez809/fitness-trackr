@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import './Workouts.css';
 
 //import api functions
-import { fetchRoutines } from "../api";
+import { fetchRoutines, routineImage } from "../api";
 
 const Workouts = () => {
     //state for all routines, initially set to an empty array
@@ -23,13 +23,15 @@ const Workouts = () => {
             {/*map over the routines to display each one*/}
             {
                 allRoutines.map( (currentElement, index) => {
+                    //call routineImage() for a link to a random image for the card
+                    const imgSrc = routineImage();
+
                     return (
                         <div className="card" key={index}>
-                            <img src="..." className="card-img-top" alt="..."/>
+                            <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="..."/>
                             <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <h5 className="card-title">Routine</h5>
+                                <p className="card-text">description</p>
                             </div>
                         </div>
                     )
