@@ -2,8 +2,21 @@
   background-color: black;
   height: 100vh;
   width: 100%;
+  padding: 3rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  overflow-y: scroll;
 }
 
+.scroll-bar::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #570202;
+}
 .card {
-  width: 18rem;
+  margin: 1rem;
 }

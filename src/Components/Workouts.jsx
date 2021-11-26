@@ -18,8 +18,7 @@ const Workouts = () => {
     }, [])
 
     return (
-        <div id="workouts-container">
-            <span>Under Construction...</span>
+        <div id="workouts-container" className="scroll-bar">
             {/*map over the routines to display each one*/}
             {
                 allRoutines.map( (currentElement, index) => {
