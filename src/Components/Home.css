@@ -26,7 +26,7 @@
   font-size: 1.2rem;
 }
 .red {
-  color: #dc3545;
+  color: #b30f18;
 }
 
 /* Media Queries */
@@ -39,6 +39,22 @@
     background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
+  }
+
+  #title-container {
+    position: fixed;
+    top: 25%;
+    left: 30%;
+    padding: 0;
+  }
+}
+
+/*mobile view*/
+@media screen and (max-width: 400px) {
+  #title-container {
+    position: fixed;
+    top: 25%;
+    left: 25%;
   }
 }
 

@@ -2,8 +2,9 @@
   background-color: #000000;
   color: whitesmoke;
   width: 100%;
-  height: 2rem;
+  height: 3rem;
   margin: 0;
+  text-align: center;
 }
 
 #nav {
@@ -12,16 +13,17 @@
   padding: 0;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 li {
   padding-right: 4rem;
-  padding-top: 0.8rem;
+  padding-top: 1rem;
   font-size: 1rem;
 }
 
 a:hover {
-  border-bottom: 0.2rem solid #dc3545;
+  border-bottom: 0.2rem solid #b30f18;
   color: whitesmoke;
 }
 
@@ -29,3 +31,5 @@ a {
   text-decoration: none;
   color: whitesmoke;
 }
+
+/**Below width of 768px, change to hamburger menu*/

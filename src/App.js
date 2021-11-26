@@ -6,8 +6,9 @@ import './App.css';
 
 //Import components
 import {
-  Home, Header
+  Home, Header, Workouts
 } from './Components/index';
+
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
       <div className="app">
         {/** Component: Header */}
         <Route
-        exact path = '/'
+        exact path = {['/', '/workouts', '/exercises']}
         render = {routeProps => <Header {...routeProps} />}
         />
 
@@ -23,6 +24,12 @@ const App = () => {
         <Route
         exact path = '/'
         render = {routeProps => <Home {...routeProps} />}
+        />
+
+        {/** Component: Workouts */}
+        <Route
+        exact path = '/workouts'
+        render = {routeProps => <Workouts {...routeProps} />}
         />
       </div>
     </Router>

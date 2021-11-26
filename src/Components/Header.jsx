@@ -6,8 +6,8 @@ const Header = () => {
     return (
         <div id="nav-container">
             <ul id="nav">
-                <li><Link to='/routines'>WORKOUTS</Link></li>
-                <li><Link to='/activities'>EXERCISES</Link></li>
+                <li><Link to='/workouts'>WORKOUTS</Link></li>
+                <li><Link to='/exercises'>EXERCISES</Link></li>
                 <li><Link to='/login'>LOG IN</Link></li>
             </ul>
         </div>
