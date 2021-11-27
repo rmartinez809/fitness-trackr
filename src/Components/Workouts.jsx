@@ -7,6 +7,7 @@ import { routineImage } from "../api";
 const Workouts = ({history, allRoutines}) => {
     return (
         <div id="workouts-container" className="scroll-bar">
+
             {/*map over the routines to display each one*/}
             {
                 allRoutines.map( (currentElement, index) => {

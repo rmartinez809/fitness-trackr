@@ -16,8 +16,6 @@ const Exercises = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log("EXERCISES COMPONENT: ", allActivities);
-
     return (
         /**map over the exercises and display each one */
         <div className="scroll-bar" id="exercises-container">

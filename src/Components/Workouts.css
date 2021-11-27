@@ -2,11 +2,11 @@
   background-color: black;
   height: 100vh;
   width: 100%;
-  padding: 3rem;
+  overflow-y: scroll;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  overflow-y: scroll;
+  padding: 3rem;
 }
 
 .scroll-bar::-webkit-scrollbar {

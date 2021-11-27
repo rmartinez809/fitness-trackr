@@ -44,4 +44,8 @@ a {
   color: whitesmoke;
 }
 
+.active {
+  border-bottom: 0.2rem solid #b30f18;
+}
+
 /**Below width of 768px, change to hamburger menu*/
