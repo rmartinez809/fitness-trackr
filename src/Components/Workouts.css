@@ -21,6 +21,6 @@
   margin: 1rem;
 }
 
-.card:hover {
+#cards-workouts:hover {
   opacity: 0.3;
 }

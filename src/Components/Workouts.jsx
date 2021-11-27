@@ -15,7 +15,7 @@ const Workouts = ({history, allRoutines}) => {
 
                     return (
                         //include a click handler on each card to go to the single routine page
-                        <div className="card" key={index}
+                        <div className="card" id="cards-workouts" key={index}
                         onClick={ () => {
                             history.push(`/workouts/${currentElement.id}`)
                         }} >
