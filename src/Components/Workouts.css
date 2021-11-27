@@ -20,3 +20,7 @@
 .card {
   margin: 1rem;
 }
+
+.card:hover {
+  opacity: 0.3;
+}

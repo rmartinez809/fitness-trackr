@@ -1,22 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import './Workouts.css';
 
 //import api functions
-import { fetchRoutines, routineImage } from "../api";
+import { routineImage } from "../api";
 
-const Workouts = () => {
-    //state for all routines, initially set to an empty array
-    const [allRoutines, setAllRoutines] = useState([]);
-
-    //when the page loads, call fetchRoutines
-    //note effect callbacks are synchronous. The async call needs to placed inside another function
-    useEffect( () => {
-        async function fetchData() {
-            setAllRoutines(await fetchRoutines());
-        }
-        fetchData();
-    }, [])
-
+const Workouts = ({history, allRoutines}) => {
     return (
         <div id="workouts-container" className="scroll-bar">
             {/*map over the routines to display each one*/}
@@ -26,11 +14,15 @@ const Workouts = () => {
                     const imgSrc = routineImage();
 
                     return (
-                        <div className="card" key={index}>
-                            <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="..."/>
+                        //include a click handler on each card to go to the single routine page
+                        <div className="card" key={index}
+                        onClick={ () => {
+                            history.push(`/workouts/${currentElement.id}`)
+                        }} >
+                            <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="workout cover"/>
                             <div className="card-body">
-                                <h5 className="card-title">Routine</h5>
-                                <p className="card-text">description</p>
+                                <h5 className="card-title">{currentElement.name}</h5>
+                                <p className="card-text"></p>
                             </div>
                         </div>
                     )
