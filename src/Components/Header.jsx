@@ -17,7 +17,8 @@ const Header = ({history, match}) => {
                     className={(match.url === '/workouts') ? 'active' : ''}>WORKOUTS</Link></li>
                 <li><Link to='/exercises'
                     className={(match.url === '/exercises') ? 'active' : ''}>EXERCISES</Link></li>
-                <li><Link to='/login'>LOG IN</Link></li>
+                <li><Link to='/login'
+                className={(match.url === '/login') ? 'active' : ''}>LOG IN</Link></li>
             </ul>
         </div>
     )

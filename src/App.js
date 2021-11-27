@@ -10,7 +10,8 @@ import {
   Header,
   Workouts,
   SingleRoutine,
-  Exercises
+  Exercises,
+  Login
 } from './Components/index';
 
 //import api and helper functions
@@ -18,8 +19,9 @@ import { fetchRoutines } from './api';
 
 
 const App = () => {
-  //state to store all workout routines, initially set to an empty array
+  //initialize state that may be shared between child Cmponents
   const [allRoutines, setAllRoutines] = useState([]);
+  const [token, setToken] = useState('');
 
   //load all workout routines and update the state
   useEffect( () => {
@@ -35,7 +37,7 @@ const App = () => {
       <div className="app">
         {/** Component: Header */}
         <Route
-        exact path = {['/', '/workouts', '/workouts/:routineId','/exercises']}
+        exact path = {['/', '/workouts', '/workouts/:routineId','/exercises', '/login', '/register']}
         render = {routeProps => <Header {...routeProps} />}
         />
 
@@ -63,6 +65,16 @@ const App = () => {
         <Route
         exact path = '/exercises'
         render = {routeProps => <Exercises {...routeProps} />}
+        />
+
+        {/** Component: Login/Register */}
+        <Route
+        exact path = '/login'
+        render = {routeProps => <Login setToken={setToken} {...routeProps} />}
+        />
+        <Route
+        exact path = '/register'
+        render = {routeProps => <Login setToken={setToken} {...routeProps} />}
         />
       </div>
     </Router>
