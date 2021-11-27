@@ -20,7 +20,20 @@ const Exercises = () => {
 
     return (
         /**map over the exercises and display each one */
-        <div id="exercises-container">Under Construction...</div>
+        <div className="scroll-bar" id="exercises-container">
+            {
+                allActivities.map( (currentElement) => {
+                    return (
+                        <div className="card" id="card-exercise" key={currentElement.id}>
+                            <div className="card-body">
+                                <h5 className="card-title">{currentElement.name}</h5>
+                                <p className="card-text">{currentElement.description}</p>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+        </div>
     )
 }
 
