@@ -1,5 +1,5 @@
 import './Header.css';
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = ({token, history, match}) => {
@@ -22,7 +22,9 @@ const Header = ({token, history, match}) => {
                     //check if a valid token exists.
                     //if it does, display a log out option in the header
                     //it will remove the token from local storage and redirect to home page
-                    token ?
+                    token ? <Fragment>
+                    <li><Link to='/myroutines'
+                    className={(match.url === '/myroutines') ? 'active' : ''}>MY ROUTINES</Link></li>
                     <li><Link to='/'
                         onClick = { () => {
                             localStorage.removeItem('token');
@@ -30,6 +32,7 @@ const Header = ({token, history, match}) => {
                             return false;
                         } }
                     >LOG OUT</Link></li>
+                    </Fragment>
                     : <li><Link to='/login'
                     className={(match.url === '/login') ? 'active' : ''}>LOG IN</Link></li>
                 }

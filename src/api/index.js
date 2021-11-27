@@ -56,10 +56,8 @@ export const fetchAllActivities = async () => {
 /**
  * USER ENDPOINTS
  */
-/**
- * This function attempts to log in a user and update the token state
- * on successful registration, stores a JWT in local storage
- */
+//This function attempts to log in a user and update the token state
+//on successful registration, stores a JWT in local storage
  export const logIn = async (username, password,setToken) => {
     try {
         const response = await fetch(`${BASEURL}/users/login`, {
@@ -95,10 +93,8 @@ export const fetchAllActivities = async () => {
     }
 }
 
-/**
- * This function attempts to register a new user
- * on successful registration, stores a JWT in local storage
- */
+//This function attempts to register a new user
+//on successful registration, stores a JWT in local storage
 export const registerUser = async (username, password, setToken) => {
     try {
         const response = await fetch(`${BASEURL}/users/register`, {
@@ -133,6 +129,26 @@ export const registerUser = async (username, password, setToken) => {
     }
 }
 
+//This function will retrieve a user object with their id and username
+export const fetchUserObj = async (token) => {
+    try {
+        const response = await fetch(`${BASEURL}/users/me`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+        })
+        const result = await response.json();
+
+        console.log("USER OBJ: ", result);
+        return result;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 
 /**
  * HELPER FUNCTIONS
@@ -157,6 +173,12 @@ export const searchRoutines = (routinesArray, routineId) => {
     //if no routine was found return an empty object
     if (!found) return {}
     else return found;
+}
+
+//this function searches an array of routines
+//and returns a new array of routines created by a specific user
+export const routinesByUser = (routinesArray, userId) => {
+
 }
 
 //This function checks for the presence of an authentication token in the browser's local storage

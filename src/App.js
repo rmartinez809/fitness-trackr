@@ -11,22 +11,32 @@ import {
   Workouts,
   SingleRoutine,
   Exercises,
-  Login
+  Login,
+  MyRoutines
 } from './Components/index';
 
 //import api and helper functions
-import { fetchRoutines, isLoggedin } from './api';
+import { fetchRoutines, isLoggedin, fetchUserObj } from './api';
 
 
 const App = () => {
   //initialize state that may be shared between child Cmponents
   const [allRoutines, setAllRoutines] = useState([]);
   const [token, setToken] = useState('');
+  const [userObj, setUserObj] = useState({});
 
-    //on page load, check if a login token exists
-    useEffect( () => {
-      isLoggedin(setToken);
-    },[])
+  //on page load, check if a login token exists
+  useEffect( () => {
+    isLoggedin(setToken);
+  },[])
+
+  //on page load, initialize the user object
+  useEffect( () => {
+    async function fetchData() {
+      setUserObj(await fetchUserObj(token));
+    }
+    fetchData();
+  }, [token])
 
   //load all workout routines and update the state
   useEffect( () => {
@@ -42,7 +52,8 @@ const App = () => {
       <div className="app">
         {/** Component: Header */}
         <Route
-        exact path = {['/', '/workouts', '/workouts/:routineId','/exercises', '/login', '/register']}
+        exact path = {['/', '/workouts', '/workouts/:routineId',
+          '/exercises', '/login', '/register', '/myroutines']}
         render = {routeProps => <Header token={token} {...routeProps} />}
         />
 
@@ -80,6 +91,12 @@ const App = () => {
         <Route
         exact path = '/register'
         render = {routeProps => <Login setToken={setToken} {...routeProps} />}
+        />
+
+        {/** Component: MyRoutines */}
+        <Route
+        exact path = '/myroutines'
+        render = {routeProps => <MyRoutines allRoutines={allRoutines} {...routeProps} />}
         />
       </div>
     </Router>
