@@ -5,6 +5,18 @@
   height: 3rem;
   margin: 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#logo {
+  padding-left: 2rem;
+  padding-top: 0.8rem;
+}
+
+#logo:hover {
+  color: #b30f18;
 }
 
 #nav {

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { Link } from "react-router-dom";
 import './SingleRoutine.css';
 
 //import helper functions
@@ -28,7 +29,7 @@ const SingleRoutine = ({match, allRoutines}) => {
                     <img src="https://www.bodybuilding.com/images/2020/january/full-body-workout-for-beginners-comingsoon-h1-640xh.jpg" className="card-img-top" alt="workout cover"/>
                     <div className="card-body">
                         <h4 className="card-title">{singleRoutine.name}</h4>
-                            <p id="creator-line"><span className="italics">created by:</span> <a href="">{singleRoutine.creatorName} </a></p>
+                            <p id="creator-line"><span className="italics">created by:</span> <Link to="">{singleRoutine.creatorName} </Link></p>
                             <br />
                             <p className="card-text"><span className="bold">Goal:</span> {singleRoutine.goal}</p>
                         <br />

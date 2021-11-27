@@ -8,3 +8,11 @@
 body {
   overflow: hidden;
 }
+
+.italics {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
