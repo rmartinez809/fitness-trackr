@@ -2,7 +2,8 @@ import './Header.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({history, match}) => {
+const Header = ({token, history, match}) => {
+
     return (
         <div id="nav-container">
             <div id='logo'>
@@ -17,8 +18,22 @@ const Header = ({history, match}) => {
                     className={(match.url === '/workouts') ? 'active' : ''}>WORKOUTS</Link></li>
                 <li><Link to='/exercises'
                     className={(match.url === '/exercises') ? 'active' : ''}>EXERCISES</Link></li>
-                <li><Link to='/login'
-                className={(match.url === '/login') ? 'active' : ''}>LOG IN</Link></li>
+                {
+                    //check if a valid token exists.
+                    //if it does, display a log out option in the header
+                    //it will remove the token from local storage and redirect to home page
+                    token ?
+                    <li><Link to='/'
+                        onClick = { () => {
+                            localStorage.removeItem('token');
+                            window.location.assign('/');
+                            return false;
+                        } }
+                    >LOG OUT</Link></li>
+                    : <li><Link to='/login'
+                    className={(match.url === '/login') ? 'active' : ''}>LOG IN</Link></li>
+                }
+
             </ul>
         </div>
     )

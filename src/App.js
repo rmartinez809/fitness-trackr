@@ -15,13 +15,18 @@ import {
 } from './Components/index';
 
 //import api and helper functions
-import { fetchRoutines } from './api';
+import { fetchRoutines, isLoggedin } from './api';
 
 
 const App = () => {
   //initialize state that may be shared between child Cmponents
   const [allRoutines, setAllRoutines] = useState([]);
   const [token, setToken] = useState('');
+
+    //on page load, check if a login token exists
+    useEffect( () => {
+      isLoggedin(setToken);
+    },[])
 
   //load all workout routines and update the state
   useEffect( () => {
@@ -38,7 +43,7 @@ const App = () => {
         {/** Component: Header */}
         <Route
         exact path = {['/', '/workouts', '/workouts/:routineId','/exercises', '/login', '/register']}
-        render = {routeProps => <Header {...routeProps} />}
+        render = {routeProps => <Header token={token} {...routeProps} />}
         />
 
         {/** Component: Home */}

@@ -158,3 +158,17 @@ export const searchRoutines = (routinesArray, routineId) => {
     if (!found) return {}
     else return found;
 }
+
+//This function checks for the presence of an authentication token in the browser's local storage
+export const isLoggedin = (setToken) => {
+    //read data from local storage
+    const token = localStorage.getItem("token");
+
+    //set the state for token
+    if (token) {
+        setToken(token);
+
+        return true;
+    }
+    else return false;
+}
