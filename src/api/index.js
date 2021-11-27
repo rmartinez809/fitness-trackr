@@ -10,7 +10,7 @@ const BASEURL = 'https://fitnesstrac-kr.herokuapp.com/api';
  */
 
 //Retrieve a list of all routines (workouts)
-//returns a an array of objects
+//returns a an array of Objects
 export const fetchRoutines = async () => {
     try {
         const response = await fetch (`${BASEURL}/routines`, {
@@ -21,7 +21,27 @@ export const fetchRoutines = async () => {
         })
         const data = await response.json();
 
-        console.log("ALL ROUTINES: ", data);
+        // console.log("ALL ROUTINES: ", data);
+        return data
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+//Retrieve a list of all activities (exercises)
+//returns an array of Objects
+export const fetchAllActivities = async () => {
+    try {
+        const response = await fetch (`${BASEURL}/activities`, {
+            method: 'GET',
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        })
+        const data = await response.json();
+
+        // console.log("ALL ACTIVITIES: ", data);
         return data
     }
     catch (error) {

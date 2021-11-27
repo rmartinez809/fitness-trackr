@@ -9,7 +9,8 @@ import {
   Home,
   Header,
   Workouts,
-  SingleRoutine
+  SingleRoutine,
+  Exercises
 } from './Components/index';
 
 //import api and helper functions
@@ -57,30 +58,15 @@ const App = () => {
         render = {routeProps => <SingleRoutine allRoutines={allRoutines}
         setAllRoutines={setAllRoutines} {...routeProps} />}
         />
+
+        {/** Component: Exercises */}
+        <Route
+        exact path = '/exercises'
+        render = {routeProps => <Exercises {...routeProps} />}
+        />
       </div>
     </Router>
   )
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
