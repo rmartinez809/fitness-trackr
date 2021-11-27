@@ -7,11 +7,29 @@
   justify-content: center;
 }
 
+#creator-line {
+  font-size: 0.9rem;
+}
+
 #card-single-view {
   width: 50%;
   margin: 2rem;
+  line-height: 1rem;
+  overflow-y: scroll;
 }
 
 .bold {
   font-weight: bold;
+}
+
+#activities p {
+  font-size: 0.9rem;
+}
+
+.card-body a {
+  color: #312f36;
+}
+
+.italics {
+  font-style: italic;
 }

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import './SingleRoutine.css';
 
 //import helper functions
-import { searchRoutines, routineImage } from "../api";
+import { searchRoutines } from "../api";
 
 const SingleRoutine = ({match, allRoutines}) => {
      //state for single routine Initialized to an empty Object
@@ -22,19 +22,34 @@ const SingleRoutine = ({match, allRoutines}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[allRoutines]);
 
-    console.log("SINGLE ROUTINE: ", singleRoutine);
-    //call routineImage() for a link to a random image for the card
-    const imgSrc = routineImage();
-
     return (
         <div id="singleRoutine-container">
-            <div className="card" id="card-single-view" key={singleRoutine.id}>
+            <div className="card scroll-bar" id="card-single-view" key={singleRoutine.id}>
                     <img src="https://www.bodybuilding.com/images/2020/january/full-body-workout-for-beginners-comingsoon-h1-640xh.jpg" className="card-img-top" alt="workout cover"/>
                     <div className="card-body">
                         <h4 className="card-title">{singleRoutine.name}</h4>
+                            <p id="creator-line"><span className="italics">created by:</span> <a href="">{singleRoutine.creatorName} </a></p>
+                            <br />
                             <p className="card-text"><span className="bold">Goal:</span> {singleRoutine.goal}</p>
                         <br />
-                        <h6>Exercises:</h6>
+                        <h5>Exercises:</h5>
+                        {/**map over the exercises array*/}
+                        {
+                            singleRoutine.activities ?
+                                singleRoutine.activities.map( (currentElement) => {
+                                    return (
+                                        <div id="activities" key={currentElement.id}>
+                                            <h6>{currentElement.name}</h6>
+                                                <p>{currentElement.description}</p>
+                                                <p>reps: {currentElement.duration}</p>
+                                                <p>sets: {currentElement.count}</p>
+                                                <hr />
+                                        </div>
+                                    )
+                                })
+                            : null
+                        }
+
                     </div>
                 </div>
         </div>
