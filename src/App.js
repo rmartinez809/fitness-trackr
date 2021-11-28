@@ -74,7 +74,7 @@ const App = () => {
         <Route
         exact path = '/workouts/:routineId'
         render = {routeProps => <SingleRoutine allRoutines={allRoutines}
-        setAllRoutines={setAllRoutines} {...routeProps} />}
+        setAllRoutines={setAllRoutines} userObj={userObj} {...routeProps} />}
         />
 
         {/** Component: Exercises */}

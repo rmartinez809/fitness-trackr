@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, Fragment} from "react";
 import { Link } from "react-router-dom";
 import './SingleRoutine.css';
 
 //import helper functions
 import { searchRoutines } from "../api";
 
-const SingleRoutine = ({match, allRoutines}) => {
+const SingleRoutine = ({match, allRoutines, userObj}) => {
      //state for single routine Initialized to an empty Object
      const [singleRoutine, setSingleRoutine] = useState({});
 
@@ -21,7 +21,8 @@ const SingleRoutine = ({match, allRoutines}) => {
         setSingleRoutine(foundRoutine);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[allRoutines]);
+    },[allRoutines, userObj]);
+    //adding userObj as dependency because we'll need to check user id to show edit button
 
     return (
         <div id="singleRoutine-container">
@@ -30,6 +31,17 @@ const SingleRoutine = ({match, allRoutines}) => {
                     <div className="card-body">
                         <h4 className="card-title">{singleRoutine.name}</h4>
                             <p id="creator-line"><span className="italics">created by:</span> <Link to="">{singleRoutine.creatorName} </Link></p>
+
+                            {/**check if logged in user is the owner of the routine. if they are display an edit button*/}
+                            {
+                                (userObj.id === singleRoutine.creatorId) ?
+                                    <Fragment>
+                                    <button type="button" className="btn btn-danger btn-sm" id="btn-edit">Edit routine</button>
+                                    <br />
+                                    </Fragment>
+                                : null
+                            }
+
                             <br />
                             <p className="card-text"><span className="bold">Goal:</span> {singleRoutine.goal}</p>
                         <br />

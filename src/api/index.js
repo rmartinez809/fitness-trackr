@@ -31,7 +31,7 @@ export const fetchRoutines = async () => {
 
 //create a new routine and return the new object.
 //must include an authentication token
-export const createRoutine = async (name, goal, token) => {
+export const createRoutine = async (name, goal, isPublic, token) => {
     console.log("CALLING CREATE ROUTINE WITH: ", name, goal);
 
     //if any fields are undefined, return early
@@ -49,7 +49,7 @@ export const createRoutine = async (name, goal, token) => {
             body: JSON.stringify({
                 name: name,
                 goal: goal,
-                isPublic: true
+                isPublic: isPublic
             })
         })
         const result = await response.json();
