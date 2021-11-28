@@ -6,4 +6,9 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  overflow-y: scroll;
+}
+
+.card-height {
+  height: fit-content;
 }

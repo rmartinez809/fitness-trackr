@@ -18,7 +18,7 @@ const Workouts = ({history, allRoutines}) => {
                         <div className="card" id="cards-workouts" key={index}
                         onClick={ () => {
                             history.push(`/workouts/${currentElement.id}`)
-                        }} >
+                            }} >
                             <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="workout cover"/>
                             <div className="card-body">
                                 <h5 className="card-title">{currentElement.name}</h5>

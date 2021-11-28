@@ -21,6 +21,7 @@ export const fetchRoutines = async () => {
         const data = await response.json();
 
         // console.log("ALL ROUTINES: ", data);
+        console.log("all routines: ", data);
         return data
     }
     catch (error) {
@@ -149,6 +150,31 @@ export const fetchUserObj = async (token) => {
     }
 }
 
+//This function will return an array of routines for a particular user
+//note, if no authorization token is passed, only public routines will be returned
+export const fetchUserRoutines = async (username, token) => {
+    //if username is undefined return early
+    if(!username) return;
+
+    try {
+        const response = await fetch(`${BASEURL}/users/${username}/routines`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        const result = await response.json();
+
+        console.log("RETURNED ROUTINES: ", result);
+        return result;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 
 /**
  * HELPER FUNCTIONS
@@ -173,12 +199,6 @@ export const searchRoutines = (routinesArray, routineId) => {
     //if no routine was found return an empty object
     if (!found) return {}
     else return found;
-}
-
-//this function searches an array of routines
-//and returns a new array of routines created by a specific user
-export const routinesByUser = (routinesArray, userId) => {
-
 }
 
 //This function checks for the presence of an authentication token in the browser's local storage

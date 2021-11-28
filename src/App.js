@@ -96,7 +96,7 @@ const App = () => {
         {/** Component: MyRoutines */}
         <Route
         exact path = '/myroutines'
-        render = {routeProps => <MyRoutines allRoutines={allRoutines} {...routeProps} />}
+        render = {routeProps => <MyRoutines userObj={userObj} token={token} {...routeProps} />}
         />
       </div>
     </Router>
