@@ -154,7 +154,7 @@ export const fetchUserObj = async (token) => {
 //note, if no authorization token is passed, only public routines will be returned
 export const fetchUserRoutines = async (username, token) => {
     //if username is undefined return early
-    if(!username) return;
+    if(!username) return [];
 
     try {
         const response = await fetch(`${BASEURL}/users/${username}/routines`, {

@@ -15,7 +15,7 @@ const MyRoutines = ({userObj, token, history}) => {
         }
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [userObj.username])
 
     return (
         //map over and display routines
