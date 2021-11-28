@@ -153,7 +153,7 @@ export const fetchUserObj = async (token) => {
 //This function will return an array of routines for a particular user
 //note, if no authorization token is passed, only public routines will be returned
 export const fetchUserRoutines = async (username, token) => {
-    //if username is undefined return early
+    //if username is undefined return early with an empty array
     if(!username) return [];
 
     try {

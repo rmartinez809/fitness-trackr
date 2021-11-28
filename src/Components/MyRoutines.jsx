@@ -18,30 +18,38 @@ const MyRoutines = ({userObj, token, history}) => {
     }, [userObj.username])
 
     return (
-        //map over and display routines
         <div className="scroll-bar" id="myroutines-container">
-            {
-                userRoutines.map((currentElement, index) => {
-                    //call routineImage() for a link to a random image for the card
-                    const imgSrc = routineImage();
 
-                    return (
-                        /* {include a click handler on each card to go to the single routine page} */
-                        <div className="card card-height" id="cards-workouts" key={index}
-                        onClick={ () => {
-                            history.push(`/workouts/${currentElement.id}`)
-                            }} >
-                            <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="workout cover"/>
-                            <div className="card-body">
-                                <h5 className="card-title">{currentElement.name}</h5>
-                                <p className="card-text"></p>
+            <div className="scroll-bar" id="cards-container-flex">
+                {
+                    userRoutines.map((currentElement, index) => {
+                        //call routineImage() for a link to a random image for the card
+                        const imgSrc = routineImage();
+
+                        return (
+                            /* {include a click handler on each card to go to the single routine page} */
+                            <div className="card card-height" id="cards-workouts" key={index}
+                            onClick={ () => {
+                                history.push(`/workouts/${currentElement.id}`)
+                                }} >
+                                <img src={window.location.origin + `/images/${imgSrc}`} className="card-img-top" alt="workout cover"/>
+                                <div className="card-body">
+                                    <h5 className="card-title">{currentElement.name}</h5>
+                                    <p className="card-text"></p>
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
+            <hr id="horizontal-line"/>
+            <div id="newRoutine-container">
+                <h4>Create new routine</h4>
+            </div>
 
         </div>
+
+
     )
 }
 
