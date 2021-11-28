@@ -36,7 +36,11 @@ const SingleRoutine = ({match, allRoutines, userObj}) => {
                             {
                                 (userObj.id === singleRoutine.creatorId) ?
                                     <Fragment>
-                                    <button type="button" className="btn btn-danger btn-sm" id="btn-edit">Edit routine</button>
+                                    <Link id='edit-routine-link' to={`/workouts/${singleRoutine.id}/edit`}>edit routine</Link>
+
+                                    {/* <button type="button" className="btn btn-danger btn-sm" id="btn-edit"
+                                        onClick={ console.log("BUTTON CLICKED") }
+                                    >Edit routine</button> */}
                                     <br />
                                     </Fragment>
                                 : null

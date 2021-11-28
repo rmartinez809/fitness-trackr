@@ -25,3 +25,15 @@
 .card-body a {
   color: #312f36;
 }
+
+#edit-routine-link {
+  text-decoration: none;
+  background-color: #b30f18;
+  color: whitesmoke;
+  padding: 0.25rem 0.5rem;
+}
+
+#edit-routine-link:hover {
+  border: none;
+  background-color: #570202;
+}
