@@ -29,6 +29,46 @@ export const fetchRoutines = async () => {
     }
 }
 
+//create a new routine and return the new object.
+//must include an authentication token
+export const createRoutine = async (name, goal, token) => {
+    console.log("CALLING CREATE ROUTINE WITH: ", name, goal);
+
+    //if any fields are undefined, return early
+    if (!name || !goal || !token) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/routines`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name: name,
+                goal: goal,
+                isPublic: true
+            })
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.id) {
+            alert("New Workout Created");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        console.log("NEW ROUTINE CREATED: ", result);
+        return result;
+    }
+    catch (error) {
+
+    }
+}
 
 /**
  * ACTIVITIES ENDPOINTS
@@ -142,7 +182,6 @@ export const fetchUserObj = async (token) => {
         })
         const result = await response.json();
 
-        console.log("USER OBJ: ", result);
         return result;
     }
     catch (error) {
