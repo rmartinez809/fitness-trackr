@@ -4,7 +4,7 @@ import './EditRoutine.css';
 //import helper functions
 import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines } from "../api";
 
-const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history}) => {
+const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history, allActivities}) => {
     //state for edit fields
     //initially set to existing values for routine
     const [newWorkoutName, setNewWorkoutName] = useState(singleRoutine.name);
@@ -23,11 +23,11 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
         setSingleRoutine(foundRoutine);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[allRoutines, userObj]);
+    },[allRoutines, userObj, allActivities, singleRoutine]);
 
     return(
-        <div id="edit-routine-container">
-            <h4>Edit your Routine</h4>
+        <div className="scroll-bar" id="edit-routine-container">
+            <h4>Edit your Workout</h4>
                 <form id="edit-routine-form"
                     onSubmit = { async (event) => {
                     //prevent the page from reloading by disabling default behavior
@@ -96,8 +96,7 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
                     </div>
 
                     <button type="submit" className="btn btn-secondary" id="update-button">Update</button>
-                    <br />
-                    <br />
+
                     <button type="button" className="btn btn-danger" id="delete-button"
                         onClick={ () => {
                             console.log("DELETING ROUTINE...");
@@ -108,8 +107,35 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
                             }
                         }
                     >Delete</button>
-
             </form>
+
+            <br />
+            <br />
+
+            <div id="edit-activities-container">
+                <h5>Add/Remove Exercises</h5>
+                <br />
+                    <input className="form-control" list="datalistOptions" id="activities-list" placeholder="Search for an exercise..."/>
+                    <datalist id="datalistOptions">
+                        {
+                            //map over activities array to display options in datalist
+                            allActivities.map((currentElement) => {
+                                return (
+                                    <option value={currentElement.name} key={currentElement.id}/>
+                                )
+                            })
+                        }
+                    </datalist>
+                    <label for="reps-list" className="form-label">reps:</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        list="numbers"
+                        id="reps-list"
+                        placeholder="10"
+                        min="0"/>
+
+            </div>
 
         </div>
 

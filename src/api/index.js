@@ -158,11 +158,54 @@ export const fetchAllActivities = async () => {
         })
         const data = await response.json();
 
-        // console.log("ALL ACTIVITIES: ", data);
-        return data
+        console.log("ALL ACTIVITIES: ", data);
+
+        if(data) {
+            return data
+        }
+        else return [];
+
     }
     catch (error) {
         throw error;
+    }
+}
+
+//creates a new activity
+//returns an object
+export const createActivity = async (name, description, token) => {
+
+    //if any fields are undefined, return early
+    if (!name || !description) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/activities`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name: name,
+                description : description
+            })
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.id) {
+            alert("New Exercise Created");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        return result;
+    }
+    catch (error) {
+
     }
 }
 

@@ -17,7 +17,7 @@ import {
 } from './Components/index';
 
 //import api and helper functions
-import { fetchRoutines, isLoggedin, fetchUserObj } from './api';
+import { fetchRoutines, isLoggedin, fetchUserObj, fetchAllActivities } from './api';
 
 
 const App = () => {
@@ -26,6 +26,7 @@ const App = () => {
   const [token, setToken] = useState('');
   const [userObj, setUserObj] = useState({});
   const [singleRoutine, setSingleRoutine] = useState({});
+  const [allActivities, setAllActivities] = useState([]);
 
   //on page load, check if a login token exists
   useEffect( () => {
@@ -48,6 +49,15 @@ const App = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+  //when the page loads, fetch all activities and update the state
+  useEffect( () => {
+    async function fetchData() {
+        setAllActivities(await fetchAllActivities());
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
   return (
     <Router>
@@ -82,7 +92,7 @@ const App = () => {
         {/** Component: Exercises */}
         <Route
         exact path = '/exercises'
-        render = {routeProps => <Exercises {...routeProps} />}
+        render = {routeProps => <Exercises token={token} allActivities={allActivities} setAllActivities={setAllActivities} {...routeProps} />}
         />
 
         {/** Component: Login/Register */}
@@ -104,7 +114,7 @@ const App = () => {
         {/** Component: EditRoutine */}
         <Route
         exact path = '/workouts/:routineId/edit'
-        render = {routeProps => <EditRoutine userObj={userObj} token={token} singleRoutine={singleRoutine} setSingleRoutine={setSingleRoutine} allRoutines={allRoutines} setAllRoutines={setAllRoutines} {...routeProps} />}
+        render = {routeProps => <EditRoutine userObj={userObj} token={token} singleRoutine={singleRoutine} setSingleRoutine={setSingleRoutine} allRoutines={allRoutines} setAllRoutines={setAllRoutines} allActivities={allActivities} {...routeProps} />}
         />
       </div>
     </Router>
