@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import './EditRoutine.css';
 
 //import helper functions
-import { searchRoutines, deleteRoutine } from "../api";
+import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines } from "../api";
 
-const EditRoutine = ({singleRoutine, allRoutines, userObj, match, setSingleRoutine, token, history}) => {
+const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history}) => {
     //state for edit fields
     //initially set to existing values for routine
     const [newWorkoutName, setNewWorkoutName] = useState(singleRoutine.name);
@@ -33,18 +33,19 @@ const EditRoutine = ({singleRoutine, allRoutines, userObj, match, setSingleRouti
                     //prevent the page from reloading by disabling default behavior
                     event.preventDefault();
 
-                    //api call to edit a new routine
-
+                    //api call to edit routine
+                    editRoutine(match.params.routineId, newWorkoutName, newWorkoutGoal, newPublicStatus, token)
 
                     //clear text fields
-
+                    setNewWorkoutName('');
+                    setNewWorkoutGoal('');
+                    setNewPublicStatus(true);
 
                     //make an api call and update state for all routines
+                    setAllRoutines(await fetchRoutines());
 
-
-                    //go back to single view page
-
-                    console.log("UPDATE ROUTINE WITH: ", newWorkoutName, newWorkoutGoal, newPublicStatus);
+                    //go back to my routines page
+                    window.location.assign('/myroutines');
                     }} >
 
 

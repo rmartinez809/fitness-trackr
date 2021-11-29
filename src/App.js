@@ -98,13 +98,13 @@ const App = () => {
         {/** Component: MyRoutines */}
         <Route
         exact path = '/myroutines'
-        render = {routeProps => <MyRoutines userObj={userObj} token={token} {...routeProps} />}
+        render = {routeProps => <MyRoutines userObj={userObj} token={token} allRoutines={allRoutines} {...routeProps} />}
         />
 
         {/** Component: EditRoutine */}
         <Route
         exact path = '/workouts/:routineId/edit'
-        render = {routeProps => <EditRoutine userObj={userObj} token={token} singleRoutine={singleRoutine} setSingleRoutine={setSingleRoutine} allRoutines={allRoutines} {...routeProps} />}
+        render = {routeProps => <EditRoutine userObj={userObj} token={token} singleRoutine={singleRoutine} setSingleRoutine={setSingleRoutine} allRoutines={allRoutines} setAllRoutines={setAllRoutines} {...routeProps} />}
         />
       </div>
     </Router>

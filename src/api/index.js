@@ -69,8 +69,48 @@ export const createRoutine = async (name, goal, isPublic, token) => {
     }
 }
 
+//edits and returns a routine
+//updats name, goal, and public/private status
+export const editRoutine = async (routineId, name, goal, isPublic, token) => {
+
+    //if any fields are undefined, return early
+    if (!name || !goal || !token) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/routines/${routineId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name: name,
+                goal: goal,
+                isPublic: isPublic
+            })
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.id) {
+            alert("Routine Successfully Updated");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        console.log("ROUTINE UPDATED: ", result);
+        return result;
+    }
+    catch (error) {
+
+    }
+}
+
 //deletes a routine and associated routine activities
-export const deleteRoutine = async (routineId, token) => {
+export const deleteRoutine = async(routineId, token) => {
     //if any fields are undefined, return early
     if (!routineId || !token) {
         return {};

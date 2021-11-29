@@ -4,7 +4,7 @@ import './MyRoutines.css';
 //import helper functions
 import { fetchUserRoutines, routineImage, createRoutine } from "../api";
 
-const MyRoutines = ({userObj, token, history}) => {
+const MyRoutines = ({userObj, token, history, allRoutines}) => {
     //state for user routines
     const [userRoutines, setUserRoutines] = useState([]);
     //state for creating a new workout
@@ -19,7 +19,7 @@ const MyRoutines = ({userObj, token, history}) => {
         }
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userObj.username])
+    }, [userObj.username, allRoutines])
 
     return (
         <div className="scroll-bar" id="myroutines-container">
