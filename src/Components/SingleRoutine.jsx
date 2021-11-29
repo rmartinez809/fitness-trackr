@@ -1,13 +1,12 @@
-import React, {useEffect, useState, Fragment} from "react";
+import React, {useEffect, Fragment} from "react";
 import { Link } from "react-router-dom";
 import './SingleRoutine.css';
 
 //import helper functions
 import { searchRoutines } from "../api";
 
-const SingleRoutine = ({match, allRoutines, userObj}) => {
-     //state for single routine Initialized to an empty Object
-     const [singleRoutine, setSingleRoutine] = useState({});
+const SingleRoutine = ({match, allRoutines, setSingleRoutine, singleRoutine, userObj}) => {
+
 
     //when the page loads fetch the single routine to display
     //ensure allRoutines is populated when loading the page

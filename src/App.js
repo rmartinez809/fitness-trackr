@@ -12,7 +12,8 @@ import {
   SingleRoutine,
   Exercises,
   Login,
-  MyRoutines
+  MyRoutines,
+  EditRoutine
 } from './Components/index';
 
 //import api and helper functions
@@ -24,6 +25,7 @@ const App = () => {
   const [allRoutines, setAllRoutines] = useState([]);
   const [token, setToken] = useState('');
   const [userObj, setUserObj] = useState({});
+  const [singleRoutine, setSingleRoutine] = useState({});
 
   //on page load, check if a login token exists
   useEffect( () => {
@@ -53,7 +55,7 @@ const App = () => {
         {/** Component: Header */}
         <Route
         exact path = {['/', '/workouts', '/workouts/:routineId',
-          '/exercises', '/login', '/register', '/myroutines']}
+          '/exercises', '/login', '/register', '/myroutines', '/workouts/:routineId/edit']}
         render = {routeProps => <Header token={token} {...routeProps} />}
         />
 
@@ -73,7 +75,7 @@ const App = () => {
         {/** Component: Single Routine */}
         <Route
         exact path = '/workouts/:routineId'
-        render = {routeProps => <SingleRoutine allRoutines={allRoutines}
+        render = {routeProps => <SingleRoutine  setSingleRoutine={setSingleRoutine} singleRoutine={singleRoutine} allRoutines={allRoutines}
         setAllRoutines={setAllRoutines} userObj={userObj} {...routeProps} />}
         />
 
@@ -97,6 +99,12 @@ const App = () => {
         <Route
         exact path = '/myroutines'
         render = {routeProps => <MyRoutines userObj={userObj} token={token} {...routeProps} />}
+        />
+
+        {/** Component: EditRoutine */}
+        <Route
+        exact path = '/workouts/:routineId/edit'
+        render = {routeProps => <EditRoutine userObj={userObj} token={token} singleRoutine={singleRoutine} setSingleRoutine={setSingleRoutine} allRoutines={allRoutines} {...routeProps} />}
         />
       </div>
     </Router>

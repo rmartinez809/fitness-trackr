@@ -49,7 +49,7 @@ const MyRoutines = ({userObj, token, history}) => {
             <hr id="horizontal-line"/>
             <div id="newRoutine-container">
                 <h4>Create a New Workout</h4>
-                <form id="newWorkout"
+                <form id="new-workout-form"
                     onSubmit = { async (event) => {
                     //prevent the page from reloading by disabling default behavior
                     event.preventDefault();

@@ -32,7 +32,6 @@ export const fetchRoutines = async () => {
 //create a new routine and return the new object.
 //must include an authentication token
 export const createRoutine = async (name, goal, isPublic, token) => {
-    console.log("CALLING CREATE ROUTINE WITH: ", name, goal);
 
     //if any fields are undefined, return early
     if (!name || !goal || !token) {
@@ -69,6 +68,40 @@ export const createRoutine = async (name, goal, isPublic, token) => {
 
     }
 }
+
+//deletes a routine and associated routine activities
+export const deleteRoutine = async (routineId, token) => {
+    //if any fields are undefined, return early
+    if (!routineId || !token) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/routines/${routineId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.success) {
+            alert("Routine Deleted");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        return result;
+    }
+    catch (error) {
+        throw error;
+    }
+
+}
+
 
 /**
  * ACTIVITIES ENDPOINTS

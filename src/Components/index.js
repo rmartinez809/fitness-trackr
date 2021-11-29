@@ -7,3 +7,4 @@ export {default as SingleRoutine} from './SingleRoutine';
 export {default as Exercises} from './Exercises';
 export {default as Login} from './Login';
 export {default as MyRoutines} from './MyRoutines';
+export {default as EditRoutine} from './EditRoutine';
