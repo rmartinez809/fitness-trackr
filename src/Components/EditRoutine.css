@@ -21,7 +21,20 @@
   margin-right: 1rem;
 }
 
-#reps-list {
+#reps {
   display: inline-block;
   width: 7%;
+}
+
+#sets {
+  display: inline-block;
+  width: 7%;
+}
+
+#edit-activities-container label {
+  margin-right: 0.5rem;
+}
+
+#edit-activities-container input {
+  margin-right: 1rem;
 }

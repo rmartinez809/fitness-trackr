@@ -142,6 +142,47 @@ export const deleteRoutine = async(routineId, token) => {
 
 }
 
+//adds a single activity to a routine
+//returns an object
+export const addActivityToRoutine = async (routineId, activityId, count, duration, token) => {
+
+    //if any fields are undefined, return early
+    if (!activityId || !count || !duration || !routineId) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/routines/${routineId}/activities`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                activityId: activityId,
+                count: count,
+                duration: duration
+            })
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.id) {
+            alert("Activity Successfully Added To Routine");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        console.log("Activity Successfully Added To Routine: ", result);
+        return result;
+    }
+    catch (error) {
+
+    }
+}
+
+
 
 /**
  * ACTIVITIES ENDPOINTS

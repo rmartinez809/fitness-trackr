@@ -2,28 +2,32 @@ import React, {useEffect, useState} from "react";
 import './EditRoutine.css';
 
 //import helper functions
-import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines } from "../api";
+import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine } from "../api";
 
 const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history, allActivities}) => {
+    //grab the routine id from the url
+    const routineId = Number(match.params.routineId);
+
     //state for edit fields
     //initially set to existing values for routine
     const [newWorkoutName, setNewWorkoutName] = useState(singleRoutine.name);
     const [newWorkoutGoal, setNewWorkoutGoal] = useState(singleRoutine.goal);
     const [newPublicStatus, setNewPublicStatus] = useState(singleRoutine.isPublic);
 
+    const [activityToRoutine, setActivityToRoutine] = useState('');
+    const [duration, setDuration] = useState(1);
+    const [count, setCount] = useState(1);
+
     //when the page loads fetch the single routine to display
     //ensure allRoutines is populated when loading the page
     useEffect( () => {
-        //grab the routine id from the url
-        const routineId = Number(match.params.routineId);
-
         //find the routine and update the singleRoutine state
         const foundRoutine = searchRoutines(allRoutines, routineId);
 
         setSingleRoutine(foundRoutine);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[allRoutines, userObj, allActivities, singleRoutine]);
+    },[]);
 
     return(
         <div className="scroll-bar" id="edit-routine-container">
@@ -115,32 +119,80 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
             <div id="edit-activities-container">
                 <h5>Add/Remove Exercises</h5>
                 <br />
-                    <input className="form-control" list="datalistOptions" id="activities-list" placeholder="Search for an exercise..."/>
+                <form id="add-activity-routine-form"
+                    onSubmit = { async (event) => {
+                    //prevent the page from reloading by disabling default behavior
+                    event.preventDefault();
+
+                    //api call to edit routine
+
+                    //clear text
+
+                    //make an api call and update state for routines;
+
+                    //go back to my routines page
+
+                    }} >
+
+                    <input
+                        className="form-control"
+                        list="datalistOptions"
+                        id="activities-list"
+                        placeholder="Search for an exercise..."
+                        value={activityToRoutine}
+                        onChange={(event) => {
+                            console.log("ACTIVITY IS: ", event.target.value );
+                            setActivityToRoutine(event.target.value);
+
+                            //not working. Attempting to grab activityId.
+                            //tried adding the activityId as a custom attribute to the html,
+                            //but console log shows value of 'null'
+                            console.log("ACTIVITY ID: ", event.target.getAttribute("activityId"));
+                        }}
+                    />
                     <datalist id="datalistOptions">
                         {
                             //map over activities array to display options in datalist
                             allActivities.map((currentElement) => {
                                 return (
-                                    <option value={currentElement.name} key={currentElement.id}/>
+                                    <option value={currentElement.name} key={currentElement.id} activityId={currentElement.id}/>
                                 )
                             })
                         }
                     </datalist>
-                    <label for="reps-list" className="form-label">reps:</label>
+                    <label htmlFor="reps" className="form-label">reps:</label>
                     <input
                         type="number"
                         className="form-control"
                         list="numbers"
-                        id="reps-list"
+                        id="reps"
                         placeholder="10"
-                        min="0"/>
-
+                        min="0"
+                        value={duration}
+                        onChange={(event) => {
+                            console.log("DURATION IS: ", event.target.value);
+                            setDuration(event.target.value);
+                        }}
+                    />
+                    <label htmlFor="sets" className="form-label">sets:</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        list="numbers"
+                        id="sets"
+                        placeholder="10"
+                        min="0"
+                        value={count}
+                        onChange={(event) => {
+                            console.log("COUNT IS: ", event.target.value);
+                            setCount(event.target.value);
+                        }}
+                    />
+                    <button type="submit" className="btn btn-secondary btn-sm" id="add-activity-btn">Add</button>
+                </form>
             </div>
-
         </div>
-
     )
-
 }
 
 export default EditRoutine;
