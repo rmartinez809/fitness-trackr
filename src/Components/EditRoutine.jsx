@@ -4,7 +4,15 @@ import './EditRoutine.css';
 //import helper functions
 import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine } from "../api";
 
+
 const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history, allActivities}) => {
+
+    const clearFields = () => {
+        setActivityToRoutine(0);
+        setDuration(1);
+        setCount(1);
+    }
+
     //grab the routine id from the url
     const routineId = Number(match.params.routineId);
 
@@ -14,7 +22,7 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
     const [newWorkoutGoal, setNewWorkoutGoal] = useState(singleRoutine.goal);
     const [newPublicStatus, setNewPublicStatus] = useState(singleRoutine.isPublic);
 
-    const [activityToRoutine, setActivityToRoutine] = useState('');
+    const [activityToRoutine, setActivityToRoutine] = useState(0);
     const [duration, setDuration] = useState(1);
     const [count, setCount] = useState(1);
 
@@ -125,41 +133,40 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
                     event.preventDefault();
 
                     //api call to edit routine
+                    addActivityToRoutine(routineId, activityToRoutine, count, duration, token);
 
                     //clear text
+                    clearFields();
 
                     //make an api call and update state for routines;
+                    setAllRoutines(await fetchRoutines());
+
 
                     //go back to my routines page
+                    window.location.reload();
 
                     }} >
 
-                    <input
-                        className="form-control"
-                        list="datalistOptions"
-                        id="activities-list"
-                        placeholder="Search for an exercise..."
-                        value={activityToRoutine}
-                        onChange={(event) => {
-                            console.log("ACTIVITY IS: ", event.target.value );
-                            setActivityToRoutine(event.target.value);
-
-                            //not working. Attempting to grab activityId.
-                            //tried adding the activityId as a custom attribute to the html,
-                            //but console log shows value of 'null'
-                            console.log("ACTIVITY ID: ", event.target.getAttribute("activityId"));
-                        }}
-                    />
-                    <datalist id="datalistOptions">
+                    <select className="form-select"
+                    id="activities-list"
+                    onChange={ (event) => {
+                        console.log("ACTIVITY IS: ", event.target.value)
+                        setActivityToRoutine(event.target.value);
+                    } }
+                    >
+                        <option defaultValue>Select an Exercise</option>
                         {
-                            //map over activities array to display options in datalist
+                            //map over activities array to display options in list
+
                             allActivities.map((currentElement) => {
                                 return (
-                                    <option value={currentElement.name} key={currentElement.id} activityId={currentElement.id}/>
+                                    <option value={currentElement.id} key={currentElement.id}>
+                                        {currentElement.name}</option>
                                 )
                             })
                         }
-                    </datalist>
+                    </select>
+
                     <label htmlFor="reps" className="form-label">reps:</label>
                     <input
                         type="number"
