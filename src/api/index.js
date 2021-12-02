@@ -373,6 +373,48 @@ export const fetchUserRoutines = async (username, token) => {
 
 
 /**
+ * ROUTINE_ACTIVITIES ENDPOINTS
+ */
+//this function updates the count or count on a routine activity
+ export const editRoutineActivity = async (routineActivityId, count, duration, token) => {
+
+    //if any fields are undefined, return early
+    if (!routineActivityId || !count || !duration ) {
+        return {};
+    }
+
+    try {
+        const response = await fetch(`${BASEURL}/routine_activities/${routineActivityId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                count: count,
+                duration: duration
+            })
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.id) {
+            alert("Routine Activity Successfully Updated");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        console.log("UPDATE SUCCESSFUL: ", result);
+        return result;
+    }
+    catch (error) {
+
+    }
+}
+
+
+/**
  * HELPER FUNCTIONS
  */
 //returns the link for a random image
@@ -394,7 +436,10 @@ export const searchRoutines = (routinesArray, routineId) => {
 
     //if no routine was found return an empty object
     if (!found) return {}
-    else return found;
+    else {
+        console.log("SINGLE ROUTINE: ", found);
+        return found;
+    }
 }
 
 //This function checks for the presence of an authentication token in the browser's local storage

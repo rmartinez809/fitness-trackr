@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, Fragment} from "react";
 import './EditRoutine.css';
 
 //import helper functions
-import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine } from "../api";
+import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine, editRoutineActivity } from "../api";
 
 
-const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match, setSingleRoutine, token, history, allActivities}) => {
+const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match, setSingleRoutine, token, history, allActivities}) => {
 
     const clearFields = () => {
         setActivityToRoutine(0);
@@ -25,6 +25,9 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
     const [activityToRoutine, setActivityToRoutine] = useState(0);
     const [duration, setDuration] = useState(1);
     const [count, setCount] = useState(1);
+
+    const [editDuration, setEditDuration] = useState();
+    const [editCount, setEditCount] = useState();
 
     //when the page loads fetch the single routine to display
     //ensure allRoutines is populated when loading the page
@@ -125,8 +128,55 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
             <br />
 
             <div id="edit-activities-container">
-                <h5>Add/Remove Exercises</h5>
+                <h5>Edit/Remove Exercises</h5>
+                {
+                    singleRoutine.activities.map( (currentElement) => {
+                        return (
+                            <Fragment>
+                            <form id="edit-routine-activity-form">
+                                <select className="form-select" id="current-routine-activity" disabled>
+                                <option defaultValue>{currentElement.name}</option>
+                            </select>
+
+                            <label htmlFor="reps" className="form-label">reps:</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                list="numbers"
+                                id="reps"
+                                placeholder="10"
+                                min="0"
+                                defaultValue={currentElement.duration}
+                                onChange={(event) => {
+                                    console.log("NEW DURATION IS: ", event.target.value);
+                                    setEditDuration(event.target.value);
+                                }}
+                            />
+
+                            <label htmlFor="sets" className="form-label">sets:</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                list="numbers"
+                                id="sets"
+                                placeholder="10"
+                                min="0"
+                                defaultValue={currentElement.count}
+                                onChange={(event) => {
+                                    console.log("NEW COUNT IS: ", event.target.value);
+                                    setEditCount(event.target.value);
+                                }}
+                            />
+                            </form>
+                            <br />
+                            </Fragment>
+                        )
+                    })
+
+                }
                 <br />
+                <br />
+                <h5>Add New Exercises</h5>
                 <form id="add-activity-routine-form"
                     onSubmit = { async (event) => {
                     //prevent the page from reloading by disabling default behavior
@@ -143,7 +193,7 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines,userObj, match,
 
 
                     //go back to my routines page
-                    window.location.reload();
+                    window.location.assign(`/workouts/${routineId}`);
 
                     }} >
 

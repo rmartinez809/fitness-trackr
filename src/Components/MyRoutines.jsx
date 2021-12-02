@@ -4,7 +4,7 @@ import './MyRoutines.css';
 //import helper functions
 import { fetchUserRoutines, routineImage, createRoutine } from "../api";
 
-const MyRoutines = ({userObj, token, history, allRoutines}) => {
+const MyRoutines = ({userObj, token, history, allRoutines, userRou}) => {
     //state for user routines
     const [userRoutines, setUserRoutines] = useState([]);
     //state for creating a new workout
