@@ -5,7 +5,7 @@ import './EditRoutine.css';
 import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine, editRoutineActivity } from "../api";
 
 
-const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match, setSingleRoutine, token, history, allActivities}) => {
+const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSingleRoutine, token, history, allActivities}) => {
 
     const clearFields = () => {
         setActivityToRoutine(0);
@@ -49,7 +49,7 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match
                     event.preventDefault();
 
                     //api call to edit routine
-                    editRoutine(match.params.routineId, newWorkoutName, newWorkoutGoal, newPublicStatus, token)
+                    await editRoutine(match.params.routineId, newWorkoutName, newWorkoutGoal, newPublicStatus, token)
 
                     //clear text fields
                     setNewWorkoutName('');
@@ -57,10 +57,10 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match
                     setNewPublicStatus(true);
 
                     //make an api call and update state for all routines
-                    setAllRoutines(await fetchRoutines());
+                    await setAllRoutines(await fetchRoutines());
 
                     //go back to my routines page
-                    window.location.assign('/myroutines');
+                    history.push(`/workouts/${routineId}`);
                     }} >
 
 
@@ -133,9 +133,24 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match
                     singleRoutine.activities.map( (currentElement) => {
                         return (
                             <Fragment>
-                            <form id="edit-routine-activity-form">
+                            <form id="edit-routine-activity-form" key={currentElement.id}
+                                onSubmit = { async (event) => {
+                                    //prevent the page from reloading by disabling default behavior
+                                    event.preventDefault();
+
+                                    //api call to edit routine
+                                    await editRoutineActivity(currentElement.routineActivityId, editCount, editDuration, token);
+
+                                    //clear text fields
+
+                                    //make an api call and update state for all routines
+                                    await setAllRoutines(await fetchRoutines());
+
+                                    //go back to my single routine page
+                                    history.push(`/workouts/${routineId}`);
+                                    }}>
                                 <select className="form-select" id="current-routine-activity" disabled>
-                                <option defaultValue>{currentElement.name}</option>
+                                <option value={currentElement.routineAcivityId}>{currentElement.name}</option>
                             </select>
 
                             <label htmlFor="reps" className="form-label">reps:</label>
@@ -167,14 +182,26 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match
                                     setEditCount(event.target.value);
                                 }}
                             />
+                            <button type="submit" className="btn btn-secondary btn-sm" id="update-routine-activity-btn">update</button>
+
+                            <button type="button" className="btn btn-danger btn-sm" id="delete-button"
+                            onClick={ () => {
+                                console.log("DELETING ROUTINE ACTIVITY...");
+
+                                //api call to remove routine activity
+
+                                //after deleting, go back to single workout page
+                                history.push(`/workouts/${routineId}`);
+                                }
+                            }>remove</button>
                             </form>
+
                             <br />
                             </Fragment>
                         )
                     })
 
                 }
-                <br />
                 <br />
                 <h5>Add New Exercises</h5>
                 <form id="add-activity-routine-form"
@@ -193,7 +220,7 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, userObj, match
 
 
                     //go back to my routines page
-                    window.location.assign(`/workouts/${routineId}`);
+                    history.push(`/workouts/${routineId}`);
 
                     }} >
 

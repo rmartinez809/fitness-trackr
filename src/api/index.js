@@ -378,11 +378,6 @@ export const fetchUserRoutines = async (username, token) => {
 //this function updates the count or count on a routine activity
  export const editRoutineActivity = async (routineActivityId, count, duration, token) => {
 
-    //if any fields are undefined, return early
-    if (!routineActivityId || !count || !duration ) {
-        return {};
-    }
-
     try {
         const response = await fetch(`${BASEURL}/routine_activities/${routineActivityId}`, {
             method: 'PATCH',
