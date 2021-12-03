@@ -408,6 +408,35 @@ export const fetchUserRoutines = async (username, token) => {
     }
 }
 
+//this function deletes a routine activity
+export const deleteRoutineActivity = async (routineActivityId, token) => {
+
+    try {
+        const response = await fetch(`${BASEURL}/routine_activities/${routineActivityId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        const result = await response.json();
+
+        //if call was successful...
+        if (result.success) {
+            alert("Routine Activity Deleted");
+        }
+        else {
+            alert(`Error:  ${result.message}`);
+        }
+
+        console.log("DELETE SUCCESSFUL: ", result);
+        return result;
+    }
+    catch (error) {
+
+    }
+}
+
 
 /**
  * HELPER FUNCTIONS

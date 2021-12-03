@@ -2,7 +2,7 @@ import React, {useEffect, useState, Fragment} from "react";
 import './EditRoutine.css';
 
 //import helper functions
-import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine, editRoutineActivity } from "../api";
+import { searchRoutines, deleteRoutine, editRoutine, fetchRoutines, addActivityToRoutine, editRoutineActivity, deleteRoutineActivity } from "../api";
 
 
 const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSingleRoutine, token, history, allActivities}) => {
@@ -185,10 +185,14 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
                             <button type="submit" className="btn btn-secondary btn-sm" id="update-routine-activity-btn">update</button>
 
                             <button type="button" className="btn btn-danger btn-sm" id="delete-button"
-                            onClick={ () => {
-                                console.log("DELETING ROUTINE ACTIVITY...");
+                            onClick={ async () => {
+                                console.log("DELETING ROUTINE ACTIVITY...", currentElement.routineActivityId);
 
                                 //api call to remove routine activity
+                                await deleteRoutineActivity(currentElement.routineActivityId, token);
+
+                                //make an api call and update state for all routines
+                                await setAllRoutines(await fetchRoutines());
 
                                 //after deleting, go back to single workout page
                                 history.push(`/workouts/${routineId}`);
@@ -210,13 +214,13 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
                     event.preventDefault();
 
                     //api call to edit routine
-                    addActivityToRoutine(routineId, activityToRoutine, count, duration, token);
+                    await addActivityToRoutine(routineId, activityToRoutine, count, duration, token);
 
                     //clear text
                     clearFields();
 
                     //make an api call and update state for routines;
-                    setAllRoutines(await fetchRoutines());
+                    await setAllRoutines(await fetchRoutines());
 
 
                     //go back to my routines page
