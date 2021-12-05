@@ -16,23 +16,6 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
     //grab the routine id from the url
     const routineId = Number(match.params.routineId);
 
-    //when the page loads fetch the single routine to display
-    useEffect( () => {
-        //ensure allRoutines and allActivities are populated when loading the page
-        // async function fetchData() {
-        //     setAllRoutines(await fetchRoutines());
-        // }
-
-        // fetchData();
-
-        //find the routine and update the singleRoutine state
-        let foundRoutine = searchRoutines(allRoutines, routineId);
-
-        setSingleRoutine(foundRoutine);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[routineId, singleRoutine]);
-
     //state for edit fields
     //initially set to existing values for routine
     const [newWorkoutName, setNewWorkoutName] = useState(singleRoutine.name);
@@ -45,6 +28,24 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
 
     const [editDuration, setEditDuration] = useState();
     const [editCount, setEditCount] = useState();
+
+
+    //when the page loads fetch the single routine to display
+    useEffect( () => {
+        //find the routine and update the singleRoutine state
+        let foundRoutine = searchRoutines(allRoutines, routineId);
+
+        setSingleRoutine(foundRoutine);
+
+        //initially set to existing values for routine
+        setNewWorkoutName(singleRoutine.name);
+        setNewWorkoutGoal(singleRoutine.goal);
+        setNewPublicStatus(singleRoutine.isPublic);
+
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[routineId, singleRoutine]);
+
 
 
     return(
