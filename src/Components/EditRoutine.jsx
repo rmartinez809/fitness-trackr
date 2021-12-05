@@ -16,6 +16,23 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
     //grab the routine id from the url
     const routineId = Number(match.params.routineId);
 
+    //when the page loads fetch the single routine to display
+    useEffect( () => {
+        //ensure allRoutines and allActivities are populated when loading the page
+        // async function fetchData() {
+        //     setAllRoutines(await fetchRoutines());
+        // }
+
+        // fetchData();
+
+        //find the routine and update the singleRoutine state
+        let foundRoutine = searchRoutines(allRoutines, routineId);
+
+        setSingleRoutine(foundRoutine);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[routineId, singleRoutine]);
+
     //state for edit fields
     //initially set to existing values for routine
     const [newWorkoutName, setNewWorkoutName] = useState(singleRoutine.name);
@@ -29,16 +46,6 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
     const [editDuration, setEditDuration] = useState();
     const [editCount, setEditCount] = useState();
 
-    //when the page loads fetch the single routine to display
-    //ensure allRoutines is populated when loading the page
-    useEffect( () => {
-        //find the routine and update the singleRoutine state
-        const foundRoutine = searchRoutines(allRoutines, routineId);
-
-        setSingleRoutine(foundRoutine);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
 
     return(
         <div className="scroll-bar" id="edit-routine-container">
@@ -130,80 +137,82 @@ const EditRoutine = ({singleRoutine, allRoutines, setAllRoutines, match, setSing
             <div id="edit-activities-container">
                 <h5>Edit/Remove Exercises</h5>
                 {
-                    singleRoutine.activities.map( (currentElement) => {
-                        return (
-                            <Fragment>
-                            <form id="edit-routine-activity-form" key={currentElement.id}
-                                onSubmit = { async (event) => {
-                                    //prevent the page from reloading by disabling default behavior
-                                    event.preventDefault();
+                    singleRoutine.activities ?
+                        singleRoutine.activities.map( (currentElement) => {
+                            return (
+                                <Fragment>
+                                <form id="edit-routine-activity-form" key={currentElement.id}
+                                    onSubmit = { async (event) => {
+                                        //prevent the page from reloading by disabling default behavior
+                                        event.preventDefault();
 
-                                    //api call to edit routine
-                                    await editRoutineActivity(currentElement.routineActivityId, editCount, editDuration, token);
+                                        //api call to edit routine
+                                        await editRoutineActivity(currentElement.routineActivityId, editCount, editDuration, token);
 
-                                    //clear text fields
+                                        //clear text fields
+
+                                        //make an api call and update state for all routines
+                                        await setAllRoutines(await fetchRoutines());
+
+                                        //go back to my single routine page
+                                        history.push(`/workouts/${routineId}`);
+                                        }}>
+                                    <select className="form-select" id="current-routine-activity" disabled>
+                                    <option value={currentElement.routineAcivityId}>{currentElement.name}</option>
+                                </select>
+
+                                <label htmlFor="reps" className="form-label">reps:</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    list="numbers"
+                                    id="reps"
+                                    placeholder="10"
+                                    min="0"
+                                    defaultValue={currentElement.duration}
+                                    onChange={(event) => {
+                                        console.log("NEW DURATION IS: ", event.target.value);
+                                        setEditDuration(event.target.value);
+                                    }}
+                                />
+
+                                <label htmlFor="sets" className="form-label">sets:</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    list="numbers"
+                                    id="sets"
+                                    placeholder="10"
+                                    min="0"
+                                    defaultValue={currentElement.count}
+                                    onChange={(event) => {
+                                        console.log("NEW COUNT IS: ", event.target.value);
+                                        setEditCount(event.target.value);
+                                    }}
+                                />
+                                <button type="submit" className="btn btn-secondary btn-sm" id="update-routine-activity-btn">update</button>
+
+                                <button type="button" className="btn btn-danger btn-sm" id="delete-button"
+                                onClick={ async () => {
+                                    console.log("DELETING ROUTINE ACTIVITY...", currentElement.routineActivityId);
+
+                                    //api call to remove routine activity
+                                    await deleteRoutineActivity(currentElement.routineActivityId, token);
 
                                     //make an api call and update state for all routines
                                     await setAllRoutines(await fetchRoutines());
 
-                                    //go back to my single routine page
+                                    //after deleting, go back to single workout page
                                     history.push(`/workouts/${routineId}`);
-                                    }}>
-                                <select className="form-select" id="current-routine-activity" disabled>
-                                <option value={currentElement.routineAcivityId}>{currentElement.name}</option>
-                            </select>
+                                    }
+                                }>remove</button>
+                                </form>
 
-                            <label htmlFor="reps" className="form-label">reps:</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                list="numbers"
-                                id="reps"
-                                placeholder="10"
-                                min="0"
-                                defaultValue={currentElement.duration}
-                                onChange={(event) => {
-                                    console.log("NEW DURATION IS: ", event.target.value);
-                                    setEditDuration(event.target.value);
-                                }}
-                            />
-
-                            <label htmlFor="sets" className="form-label">sets:</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                list="numbers"
-                                id="sets"
-                                placeholder="10"
-                                min="0"
-                                defaultValue={currentElement.count}
-                                onChange={(event) => {
-                                    console.log("NEW COUNT IS: ", event.target.value);
-                                    setEditCount(event.target.value);
-                                }}
-                            />
-                            <button type="submit" className="btn btn-secondary btn-sm" id="update-routine-activity-btn">update</button>
-
-                            <button type="button" className="btn btn-danger btn-sm" id="delete-button"
-                            onClick={ async () => {
-                                console.log("DELETING ROUTINE ACTIVITY...", currentElement.routineActivityId);
-
-                                //api call to remove routine activity
-                                await deleteRoutineActivity(currentElement.routineActivityId, token);
-
-                                //make an api call and update state for all routines
-                                await setAllRoutines(await fetchRoutines());
-
-                                //after deleting, go back to single workout page
-                                history.push(`/workouts/${routineId}`);
-                                }
-                            }>remove</button>
-                            </form>
-
-                            <br />
-                            </Fragment>
-                        )
-                    })
+                                <br />
+                                </Fragment>
+                            )
+                        })
+                    : null
 
                 }
                 <br />
